@@ -2,9 +2,6 @@
 
 const App = document.getElementById('app')
 
-import PerspectiveCamera from './src/demo/perspective-camera';
-
-console.log(App);
-
+import PerspectiveCamera from './src/demo/PerspectiveCamera';
 PerspectiveCamera(App)
 

@@ -1,47 +1,53 @@
-import THREE, { Camera } from "three";
+import * as THREE from "three";
+import { Camera, Object3D } from "three";
 
 
 
 
 
 class SceneClass {
-    public scene: THREE.Scene
+    protected scene: THREE.Scene
 
-    constructor(camera: Camera) {
+    constructor(camera: Camera, protected dom: HTMLElement) {
         this.scene = new THREE.Scene()
-        this.scene.add(camera)
+        this.sceneAdd(camera)
+    }
+
+    sceneAdd(...args: Object3D[]) {
+        this.scene.add(...args)
     }
 }
 
-class RenderClass {
+class RenderClass extends SceneClass {
     protected renderer: THREE.WebGLRenderer
 
-    constructor(protected camera: Camera) {
+    constructor(protected camera: Camera, protected dom: HTMLElement) {
+        super(camera, dom)
         this.renderer = new THREE.WebGLRenderer();
     }
 
-    public render(scene: THREE.Scene) {
-        this.renderer.render(scene, this.camera)
-        requestAnimationFrame(this.render.bind(this, scene))
+    public renderView(callback?, time?) {
+        typeof callback == 'function' && callback(time)
+        this.renderer.render(this.scene, this.camera)
+        requestAnimationFrame(this.renderView.bind(this, callback))
+    }
+
+    public renderSetSize(width: number, height: number) {
+        this.renderer.setSize(width, height)
+    }
+
+
+    public renderAppendDom() {
+        if (!this.dom) console.warn('dom 元素还未加载')
+        this.dom.appendChild(this.renderer.domElement)
     }
 }
 
 
 export default function ThreeApi(camera: Camera, dom: HTMLElement) {
-    const sceneClass = new SceneClass(camera);
-    const renderClass = new RenderClass(camera);
+    const renderClass = new RenderClass(camera, dom);
 
-
-
-    // dom.appendChild(renderClass.render)
-    /** 执行渲染 */
-
-
-
-    return {
-        render: renderClass.render
-    }
-
+    return renderClass
 }
 
 

@@ -1,6 +1,7 @@
 import * as THREE from 'three';
 import ThreeApi from '../utils/ThreeApi';
 import OrbitControls from './controls/OrbitControls';
+import gsap from 'gsap'
 
 
 export default (dom: HTMLElement | null) => {
@@ -57,16 +58,15 @@ export default (dom: HTMLElement | null) => {
     const clock = new THREE.Clock();
 
 
+
+    // 目标：掌握 Gsap 动画实现各种动画效果
+
+
+    // 设置动画
+    gsap.to(cube.position, { x: 5, duration: 5 })
+    gsap.to(cube.position, { x: 2 * Math.PI, duration: 5 ,ease:"power1.in"})
+
+
     // 使用渲染器，通过相机将场景渲染进来
-    threeApi.renderView(function () {
-        let time = clock.getElapsedTime();
-        let t = time % 5;
-
-        cube.position.x = t * 1;
-        if (cube.position.x > 5) {
-            cube.position.x = 0;
-        }
-
-    })
-
+    threeApi.renderView()
 }

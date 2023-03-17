@@ -19,7 +19,7 @@ class SceneClass {
 }
 
 class RenderClass extends SceneClass {
-    protected renderer: THREE.WebGLRenderer
+    public renderer: THREE.WebGLRenderer
 
     constructor(protected camera: Camera, protected dom: HTMLElement) {
         super(camera, dom)

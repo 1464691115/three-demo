@@ -18,14 +18,26 @@ export default (dom: HTMLElement | null) => {
     // 添加物体
     // 创建几何体
     const cubeGeometry = new THREE.BoxGeometry(1, 1, 1);
+    const vertices = new Float32Array([
+        -1.0, -1.0, 1.0,
+        1.0, -1.0, 1.0,
+        1.0, 1.0, 1.0,
+        1.0, 1.0, 1.0,
+        -1.0, 1.0, 1.0,
+        -1.0, -1.0, 1.0
+    ])
+
+    cubeGeometry.setAttribute('position', new THREE.BufferAttribute(vertices, 3))
+
     const cubeMaterial = new THREE.MeshBasicMaterial({ color: 0xffff00 });
 
     // 根据几何体和材质创建物体
     const cube = new THREE.Mesh(cubeGeometry, cubeMaterial);
+    // const mesh = new THREE.Mesh()
 
 
     // 移动物体位置
-    cube.position.set(3, 0, 0)
+    // cube.position.set(3, 0, 0)
 
     // 缩放物体
     // cube.scale.set(3, 2, 1)

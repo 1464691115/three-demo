@@ -5,7 +5,7 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 
 
 export default (dom: HTMLElement | null) => {
-     if (!dom) return
+    if (!dom) return
     // 1、创建场景
     const scene = new THREE.Scene()
 
@@ -17,24 +17,33 @@ export default (dom: HTMLElement | null) => {
 
     // 添加物体
     // 创建几何体
-    const cubeGeometry = new THREE.BoxGeometry(1, 1, 1);
-    const vertices = new Float32Array([
-        -1.0, -1.0, 1.0,
-        1.0, -1.0, 1.0,
-        1.0, 1.0, 1.0,
-        1.0, 1.0, 1.0,
-        -1.0, 1.0, 1.0,
-        -1.0, -1.0, 1.0
-    ])
+    let i = 0;
+    while (i++ < 50) {
+        const cubeGeometry = new THREE.BufferGeometry();
+        const positionArray = new Float32Array(9);
+        let j = 0;
+        while (j++ < 9) {
+            positionArray[j] = Math.random() * 10 - 5;
+ 
+            console.log(Math.random() * 5);
 
-    cubeGeometry.setAttribute('position', new THREE.BufferAttribute(vertices, 3))
+        }
 
-    const cubeMaterial = new THREE.MeshBasicMaterial({ color: 0xffff00 });
+        cubeGeometry.setAttribute('position', new THREE.BufferAttribute(positionArray, 3))
 
-    // 根据几何体和材质创建物体
-    const cube = new THREE.Mesh(cubeGeometry, cubeMaterial);
 
-    scene.add(cube)
+        const color = new THREE.Color(Math.random(), Math.random(), Math.random())
+        const cubeMaterial = new THREE.MeshBasicMaterial({ color: color, transparent: true, opacity: 0.5 });
+
+        // 根据几何体和材质创建物体
+        const cube = new THREE.Mesh(cubeGeometry, cubeMaterial);
+
+        scene.add(cube)
+    }
+
+
+
+
 
     // 初始化渲染器
     const renderer = new THREE.WebGLRenderer();

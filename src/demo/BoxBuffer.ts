@@ -17,8 +17,7 @@ export default (dom: HTMLElement | null) => {
     // 导入纹理
     const textureLoader = new THREE.TextureLoader();
     const manColorTexture = textureLoader.load('https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/668ea246aa404149972c98b3cb89ac65~tplv-k3u1fbpfcp-zoom-in-crop-mark:4536:0:0:0.awebp')
-
-    const texture = textureLoader.load("https://ts1.cn.mm.bing.net/th?id=OIP-C.e7mnu6uk2ZOpD7-cJ0y77wHaHa&w=146&h=146&c=8&rs=1&qlt=90&o=6&pid=3.1&rm=2")
+    const manAlphaTexture = textureLoader.load('')
 
     // manColorTexture.offset.x = 0.5;
     //   manColorTexture.offset.y = 0.5;
@@ -40,14 +39,23 @@ export default (dom: HTMLElement | null) => {
     const cubeGeometry = new THREE.BoxBufferGeometry()
     const basicMaterial = new THREE.MeshBasicMaterial({
         color: '#ffff00',
-        // map: manColorTexture
-        map: texture
+        map: manColorTexture,
+        transparent: true,
+        opacity: 0.3,
+        side: THREE.DoubleSide
     })
 
     const cube = new THREE.Mesh(cubeGeometry, basicMaterial)
     scene.add(cube)
 
 
+
+    const plane = new THREE.Mesh(
+        new THREE.PlaneGeometry(1, 1),
+        basicMaterial
+    )
+    plane.position.set(3, 0, 0)
+    scene.add(plane)
 
     // 初始化渲染器
     const renderer = new THREE.WebGLRenderer();

@@ -18,6 +18,24 @@ export default (dom: HTMLElement | null) => {
     const textureLoader = new THREE.TextureLoader();
     const manColorTexture = textureLoader.load('https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/668ea246aa404149972c98b3cb89ac65~tplv-k3u1fbpfcp-zoom-in-crop-mark:4536:0:0:0.awebp')
 
+    manColorTexture.offset.x = 0.5;
+    //   manColorTexture.offset.y = 0.5;
+    //   manColorTexture.offset.set(0.5,0.5);
+
+
+    // 纹理旋转
+    // 设置旋转的原点
+    manColorTexture.center.set(0.5, 0.5)
+
+    // 旋转45deg
+    manColorTexture.rotation = Math.PI / 4
+
+    // 设置纹理的重复
+    // manColorTexture.wrapS = THREE.RepeatWrapping;
+    // manColorTexture.wrapT = THREE.MirroredRepeatWrapping;
+    manColorTexture.wrapS = THREE.MirroredRepeatWrapping;
+    manColorTexture.wrapT = THREE.RepeatWrapping;
+
     // 添加物体
     const cubeGeometry = new THREE.BoxBufferGeometry()
     const basicMaterial = new THREE.MeshBasicMaterial({
